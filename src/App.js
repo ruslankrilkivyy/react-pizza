@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Route } from 'react-router-dom';
 
 import { Header } from './components';
@@ -17,11 +18,19 @@ const categories = {
 };
 
 function App() {
+  const [pizzas, setPizzas] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get('http://localhost:3001/pizzas').then((response) => {
+      setPizzas(response.data);
+    });
+  }, []);
+
   return (
     <div className="wrapper">
       <Route path="/" component={Header} />
       <div className="content">
-        <Route path="/" exact render={() => <Home categories={categories} />} />
+        <Route path="/" exact render={() => <Home categories={categories} items={pizzas} />} />
         <Route path="/cart" component={Cart} />
       </div>
     </div>

@@ -1,18 +1,16 @@
 import React from 'react';
 
-const Categories = ({ items }) => {
-  const [activeItem, setActiveItem] = React.useState(null);
-
+const Categories = ({ items, activeItem, setActiveItem }) => {
   return (
     <ul>
-      <li onClick={() => setActiveItem(null)} className={activeItem === null ? 'active' : null}>
+      <li onClick={() => setActiveItem('Все')} className={activeItem === 'Все' ? 'active' : null}>
         Все
       </li>
       {items.map(({ name, id }) => (
         <li
           key={id}
-          onClick={() => setActiveItem(id)}
-          className={activeItem === id ? 'active' : null}>
+          onClick={() => setActiveItem(name)}
+          className={activeItem === name ? 'active' : null}>
           {name}
         </li>
       ))}

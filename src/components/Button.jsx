@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CartButton = () => {
+const Button = () => {
   return (
     <div className="header__cart">
       <a href="/cart.html" className="button button--cart">
@@ -40,4 +40,4 @@ const CartButton = () => {
   );
 };
 
-export default CartButton;
+export default Button;
