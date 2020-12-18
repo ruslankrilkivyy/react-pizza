@@ -1,7 +1,7 @@
 import React from 'react';
 
-const SortPopup = ({ sortNames }) => {
-  const [activeLabel, setActiveLabel] = React.useState(sortNames[0]);
+const SortPopup = React.memo(function SortPopup({ sortTypes }) {
+  const [activeLabel, setActiveLabel] = React.useState(sortTypes[0].name);
   const [visiblePopup, setVisiblePopup] = React.useState(false);
   const sortRef = React.useRef();
 
@@ -36,12 +36,12 @@ const SortPopup = ({ sortNames }) => {
       {visiblePopup && (
         <div className="sort__popup">
           <ul>
-            {sortNames.map((name, index) => (
+            {sortTypes.map((item, index) => (
               <li
                 key={index}
-                onClick={() => setActiveLabel(name)}
-                className={activeLabel === name ? 'active' : null}>
-                {name}
+                onClick={() => setActiveLabel(item.name)}
+                className={activeLabel === item.name ? 'active' : null}>
+                {item.name}
               </li>
             ))}
           </ul>
@@ -49,6 +49,6 @@ const SortPopup = ({ sortNames }) => {
       )}
     </>
   );
-};
+});
 
 export default SortPopup;
