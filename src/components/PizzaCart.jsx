@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Button } from '../components';
 
-function PizzaCart({ name, imageUrl, types, price, sizes }) {
+function PizzaCart({ id, name, imageUrl, types, price, sizes, addedCount, onClickAddPizza }) {
   const typeNames = ['тонкое', 'традиционное'];
   const availableSizes = [26, 30, 40];
 
@@ -17,6 +18,18 @@ function PizzaCart({ name, imageUrl, types, price, sizes }) {
     setActiveSize(index);
   };
 
+  const onAddPizza = () => {
+    const obj = {
+      id,
+      name,
+      imageUrl,
+      price,
+      size: availableSizes[activeSize],
+      type: typeNames[activeType],
+    };
+    onClickAddPizza(obj);
+  };
+
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
@@ -25,6 +38,7 @@ function PizzaCart({ name, imageUrl, types, price, sizes }) {
         <ul>
           {typeNames.map((type, index) => (
             <li
+              key={`${type} ${index}`}
               onClick={() => onSetActiveType(index)}
               className={classNames({
                 active: activeType === index,
@@ -37,7 +51,7 @@ function PizzaCart({ name, imageUrl, types, price, sizes }) {
         <ul>
           {availableSizes.map((size, index) => (
             <li
-              key={index}
+              key={`${size}_${index}`}
               onClick={() => onSetActiveSize(size)}
               className={classNames({
                 active: activeSize === size,
@@ -50,7 +64,7 @@ function PizzaCart({ name, imageUrl, types, price, sizes }) {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <div className="button button--outline button--add">
+        <Button onClick={onAddPizza} className="button--add" outline>
           <svg
             width="12"
             height="12"
@@ -63,8 +77,8 @@ function PizzaCart({ name, imageUrl, types, price, sizes }) {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
-        </div>
+          {addedCount && <i>{addedCount}</i>}
+        </Button>
       </div>
     </div>
   );
@@ -76,6 +90,8 @@ PizzaCart.propTypes = {
   price: PropTypes.number,
   types: PropTypes.arrayOf(PropTypes.number),
   sizes: PropTypes.arrayOf(PropTypes.number),
+  onClickAddPizza: PropTypes.func,
+  addedCount: PropTypes.number,
 };
 
 PizzaCart.defaultProps = {

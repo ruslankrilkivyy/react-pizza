@@ -1,6 +1,9 @@
 const initialState = {
-  category: 0,
-  sortBy: 'popular',
+  category: null,
+  sortBy: {
+    type: 'rating',
+    order: 'desc',
+  },
 };
 
 const SET_SORT_BY = 'SET_SORT_BY';
